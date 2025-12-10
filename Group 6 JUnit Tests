@@ -1,0 +1,98 @@
+import org.junit.Test;
+import static org.junit.Assert.*;
+   
+public class StudentRecordsTest {
+
+    @Test
+    public void testStudentsAndTranscriptsLoaded() throws Exception {
+        // use Group 2 code
+        
+        StudentRecords records = new StudentRecords();
+        Object[] allData = records.getAllRecords();
+        String[][] students = (String[][]) allData[0];
+        String[][] transcripts = (String[][]) allData[1];
+     
+
+
+
+        assertNotNull("students array should not be null", students);
+        assertTrue("should load at least one student record", students.length > 0);
+
+        assertNotNull("transcripts array should not be null", transcripts);
+        assertTrue("should load at least one transcript record", transcripts.length > 0);
+    }
+}
+
+
+
+import static org.junit.Assert.*;
+import org.junit.Test;
+
+public class ConstraintResultTest {
+
+    @Test
+    public void testPass() {
+        ConstraintResult r = ConstraintResult.pass();
+        assertNotNull(r);
+    }
+
+    @Test
+    public void testFail() {
+        ConstraintResult r = ConstraintResult.fail("error");
+        assertNotNull(r);
+    }
+}
+
+
+
+import static org.junit.Assert.*;
+import org.junit.Test;
+import java.io.FileNotFoundException;
+
+public class IntegrationTest {
+
+    @Test
+    public void testSystemWorksTogether() throws FileNotFoundException {
+
+        // --- Group 2: Student Records ---
+        StudentRecords records = new StudentRecords();
+
+        // getAllRecords() returns Object[]
+        Object[] allData = records.getAllRecords();
+        String[][] students = (String[][]) allData[0];
+
+        assertNotNull("Students array should not be null", students);
+
+        // --- Group 6: Scheduler + Constraints ---
+        String[] section = {"12345", "001", "Smith", "MWF 9am", "CSE100", "30"};
+
+        // Call your scheduler's method
+        // If your scheduler class is named differently, change MyScheduler → your class name
+        boolean ok = myScheduler.ConstraintSuite(section);
+
+        assertTrue("Section should pass all constraints", ok);
+    }
+}
+
+
+
+import org.junit.Test; 
+import static org.junit.Assert.*;
+    
+public class MySchedulerTest {
+
+    @Test
+    public void testConstraintSuiteBasic() {
+        String[] section = {"12345", "001", "Smith", "MWF 9am", "CSE100", "30"};
+        boolean ok = myScheduler.ConstraintSuite(section);
+        assertTrue(ok);
+    }
+
+    @Test
+    public void testConstraintSuiteEmpty() {
+        String[] section = {};
+        boolean ok = myScheduler.ConstraintSuite(section);
+        assertTrue(ok);
+    }
+}
+         
